@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Snap Stick</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="brand">
+                <span style="color: purple;">Snap</span><span style="color: lightblue;">Stick</span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+            <input type="text" id="search-bar" placeholder="Search products..." onkeyup="filterProducts()">
+        </nav>
+    </header>
+    <main>
+        <h1>Checkout</h1>
+        <form id="checkout-form">
+            <label>Payment Method:</label>
+            <select id="payment-method">
+                <option value="cod">Cash on Delivery</option>
+                <option value="instapay">InstaPay</option>
+                <option value="credit">Credit Card</option>
+            </select>
+            <div id="credit-card-fields" style="display: none;">
+                <input type="text" id="card-number" placeholder="Card Number" required>
+                <input type="text" id="expiry" placeholder="Expiry (MM/YY)" required>
+                <input type="text" id="cvv" placeholder="CVV" required>
+            </div>
+            <button type="submit" class="btn">Place Order</button>
+        </form>
+        <div id="confirmation" style="display: none;">
+            <p>Order placed successfully! Your cart has been cleared.</p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Snap Stick. All rights reserved.</p>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
