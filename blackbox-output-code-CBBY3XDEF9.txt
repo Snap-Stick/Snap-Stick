@@ -1,5 +1,0 @@
-title: My Cool Clothing & Stickers
-description: Modern store for trendy clothes and stickers
-theme: minima  # Or replace with a custom theme
-plugins:
-  - jekyll-feed
