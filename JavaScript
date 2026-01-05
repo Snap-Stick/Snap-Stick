@@ -1,0 +1,61 @@
+const products = [
+    { id: 1, name: "Black Hoodie", price: 500, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop&crop=face", soldOut: false },
+    { id: 2, name: "White Hoodie", price: 500, image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=400&fit=crop&crop=face", soldOut: false },
+    { id: 3, name: "Blue Hoodie", price: 500, image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop&crop=face", soldOut: false },
+    { id: 4, name: "Brown Hoodie", price: 500, image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&h=400&fit=crop&crop=face", soldOut: true }
+];
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Update cart count
+function updateCartCount() {
+    document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+// Load products on shop page
+function loadProducts(filter = '') {
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase())).forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card' + (product.soldOut ? ' sold-out' : '');
+        card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p class="price">500 EGP</p>
+            ${product.soldOut ? '<p>Sold Out</p>' : '<button onclick="addToCart(' + product.id + ')">Add to Cart</button>'}
+        `;
+        card.onclick = () => window.location.href = `product.html?id=${product.id}`;
+        grid.appendChild(card);
+    });
+}
+
+// Load featured on home
+function loadFeatured() {
+    const featured = document.getElementById('featured-products');
+    if (!featured) return;
+    products.slice(0, 2).forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p class="price">500 EGP</p>
+            <a href="product.html?id=${product.id}" class="btn">View</a>
+        `;
+        featured.appendChild(card);
+    });
+}
+
+// Load product detail
+function loadProductDetail() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = parseInt(urlParams.get('id'));
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    document.getElementById('product-detail').innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h1>${product.name}</h1>
+        <p class="price">500 EGP</p>
+        ${product.soldOut ? '<p>Sold Out</p>' : '<button onclick="addToCart(' + product.id + ')" class="btn">Add to Cart</button>'}
